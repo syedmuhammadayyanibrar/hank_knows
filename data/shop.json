@@ -1,0 +1,83 @@
+{
+  "shopName": "Acme Precision Stamping & CNC",
+  "facility": "Plant 4 - Forming & Machining Bay",
+  "phoneExtension": "EXT 4040 · LINE 2",
+  "workers": [
+    {
+      "id": "dev",
+      "name": "Dev",
+      "role": "Apprentice Machinist",
+      "bay": "Stamping Line 2",
+      "shift": "Day (06:00-14:30)"
+    },
+    {
+      "id": "marco",
+      "name": "Marco",
+      "role": "CNC Operator",
+      "bay": "Mill Cell B",
+      "shift": "Day (06:00-14:30)"
+    },
+    {
+      "id": "lena",
+      "name": "Lena",
+      "role": "Brake Press Operator",
+      "bay": "Forming Bay",
+      "shift": "Day (06:00-14:30)"
+    }
+  ],
+  "veterans": [
+    {
+      "id": "hank",
+      "name": "Hank",
+      "role": "Lead Toolmaker & Setup Specialist",
+      "yearsExperience": 34,
+      "extension": "4041",
+      "status": "On Floor"
+    }
+  ],
+  "machines": [
+    {
+      "id": "Press-03",
+      "name": "Minster 200-Ton Mechanical Stamping Press",
+      "type": "Mechanical Press",
+      "location": "Line 2",
+      "tonnage": 200,
+      "power": "480V 3-Phase",
+      "controller": "Allen-Bradley GuardLogix",
+      "aliases": ["press-03", "press 3", "minster", "stamping press", "press"]
+    },
+    {
+      "id": "Brake-02",
+      "name": "Amada HFE-1003 Hydraulic Press Brake",
+      "type": "Press Brake",
+      "location": "Forming Bay",
+      "tonnage": 100,
+      "controller": "Amada AMNC-PC",
+      "aliases": ["brake-02", "brake 2", "amada", "press brake", "brake"]
+    },
+    {
+      "id": "CNC-08",
+      "name": "Haas VF-4 4-Axis Vertical Machining Center",
+      "type": "CNC Mill",
+      "location": "Cell B",
+      "spindleRPM": 10000,
+      "controller": "Haas NextGen",
+      "aliases": ["cnc-08", "cnc 8", "haas vf-4", "haas", "mill", "cnc"]
+    },
+    {
+      "id": "Lathe-01",
+      "name": "Mazak Quick Turn 250 CNC Lathe",
+      "type": "CNC Lathe",
+      "location": "Turning Bay",
+      "controller": "Mazatrol SmoothG",
+      "aliases": ["lathe-01", "lathe 1", "mazak", "lathe"]
+    },
+    {
+      "id": "Degreaser-01",
+      "name": "Safety-Kleen Heated Parts Washer",
+      "type": "Vapor Degreaser",
+      "location": "Wash Station 1",
+      "aliases": ["degreaser-01", "degreaser", "washer", "parts washer"]
+    }
+  ]
+}

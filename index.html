@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hank Knows · Shop Floor Knowledge Capture</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <header class="top-header">
+      <div class="brand-row">
+        <div>
+          <h1 class="page-title">HANK KNOWS</h1>
+          <div class="shop-subhead">Acme Precision Stamping &amp; CNC · Plant 4 Floor Assistant</div>
+        </div>
+      </div>
+      <div class="controls-bar">
+        <div class="worker-selector">
+          <span class="selector-label">Active Worker:</span>
+          <div class="segmented-group" role="group" aria-label="Active Worker">
+            <button type="button" class="seg-btn active" data-worker="dev">Dev (Apprentice)</button>
+            <button type="button" class="seg-btn" data-worker="marco">Marco (CNC)</button>
+            <button type="button" class="seg-btn" data-worker="lena">Lena (Brake)</button>
+          </div>
+        </div>
+        <div class="action-group">
+          <button type="button" id="replay-btn" class="btn-primary">
+            <span>Replay the story</span>
+          </button>
+          <button type="button" id="reset-btn" class="btn-outline">Reset</button>
+        </div>
+      </div>
+      <div id="story-banner" class="story-status-banner hidden" role="status">
+        <span id="story-banner-text">Playing story...</span>
+        <span id="story-banner-nudge" class="nudge-text"></span>
+      </div>
+    </header>
+
+    <main class="app-grid">
+      <section class="phone-column" aria-label="Shop Assistant Phone Interface">
+        <div id="reused-banner" class="reused-banner hidden" role="status">Answered from knowledge captured earlier</div>
+        
+        <div class="phone-frame">
+          <div class="phone-notch-bar">
+            <div class="phone-notch-pill"></div>
+          </div>
+          <div class="phone-status-bar">
+            <span id="phone-clock">07:24</span>
+            <span>●●●○ 5G &nbsp; 100%</span>
+          </div>
+          <div class="phone-contact-header">
+            <div class="contact-avatar">SA</div>
+            <div class="contact-info">
+              <div class="contact-title-row">
+                <span class="contact-name">Shop Assistant</span>
+                <span class="online-dot" aria-label="Online"></span>
+              </div>
+              <span class="contact-meta">EXT 4040 · LINE 2</span>
+            </div>
+          </div>
+
+          <div id="chat-stream" class="chat-stream">
+            <div id="chat-empty" class="chat-empty-state">
+              No active shift inquiries. Ask a machine question, query an SOP, or click a quick example below.
+            </div>
+            <div id="typing-indicator" class="typing-indicator" style="display: none;" aria-live="polite">
+              <span class="typing-dot"></span>
+              <span class="typing-dot"></span>
+              <span class="typing-dot"></span>
+              <span class="typing-text-fallback">typing...</span>
+            </div>
+          </div>
+
+          <div class="quick-send-strip" role="toolbar" aria-label="Example shop questions">
+            <button type="button" class="quick-chip" data-query="Press-03 is jamming on the aluminum coil feed again. SOP says clear with aluminum probe, but it sticks every 40 strokes. What is causing this?">Press-03 coil jam on aluminum</button>
+            <button type="button" class="quick-chip" data-query="Brake-02 light curtain keeps tripping on the flange fold. Can I jump terminal 4 to bypass the optical interlock until end of shift?">Brake-02 bypass light curtain</button>
+            <button type="button" class="quick-chip" data-query="What is the hydraulic oil operating temperature limit on Brake-02?">Brake-02 hydraulic temp limit</button>
+            <button type="button" class="quick-chip" data-query="What is the standard water-soluble coolant concentration for the Haas VF-4 CNC-08?">CNC-08 coolant ratio</button>
+            <button type="button" class="quick-chip" data-query="Can I open the 480V disconnect cabinet on Press-03 while live without LOTO to inspect the bus bar?">Press-03 480V panel live</button>
+          </div>
+
+          <form id="chat-form" class="chat-input-bar">
+            <input type="text" id="chat-input" class="chat-input" placeholder="Ask about tooling, jams, clearances..." autocomplete="off">
+            <button type="submit" id="chat-send" class="chat-send-btn" aria-label="Send message">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="19" x2="12" y2="5"></line>
+                <polyline points="5 12 12 5 19 12"></polyline>
+              </svg>
+            </button>
+          </form>
+        </div>
+
+        <div id="veteran-capture-box" class="veteran-capture-box hidden" role="region" aria-label="Veteran Knowledge Capture">
+          <div class="vet-header-row">
+            <span class="vet-label">Hank is typing... (you are Hank)</span>
+          </div>
+          <button type="button" id="vet-suggested-btn" class="vet-suggested-chip">
+            Aluminum 5052 galls on the feed guide pins when humidity is high. Wipe the guide rollers with dry lube spray (do not use oil—oil collects grit) and back off feed roll tension 1/4 turn.
+          </button>
+          <textarea id="vet-input" class="vet-textarea" rows="2" placeholder="Hank's shop wisdom..."></textarea>
+          <div class="vet-btn-row">
+            <button type="button" id="vet-send-btn" class="btn-primary">Capture to Knowledge Base</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel work-order-panel" aria-label="Work Orders">
+        <div class="panel-header-strip">
+          <span class="panel-title">Active Work Orders</span>
+          <span id="wo-count" class="count-badge">0</span>
+        </div>
+        <div id="wo-body" class="panel-body">
+          <div id="wo-empty" class="empty-state-box">
+            No open work orders logged this shift.
+          </div>
+          <div id="current-wo-container"></div>
+          <div id="older-wo-stack" class="older-wo-stack"></div>
+        </div>
+      </section>
+
+      <section class="panel kb-panel" aria-label="Knowledge Base">
+        <div class="panel-header-strip">
+          <span class="panel-title">Captured Veteran Knowledge</span>
+          <span id="kb-count" class="count-badge">0</span>
+        </div>
+        <div id="kb-body" class="panel-body">
+          <div id="kb-empty" class="empty-state-box">
+            Nothing captured yet. Ask something the documents don't cover.
+          </div>
+          <div id="kb-cards-container"></div>
+        </div>
+      </section>
+    </main>
+
+    <div class="mobile-sticky-replay">
+      <button type="button" id="mobile-replay-btn" class="btn-primary">Replay the story</button>
+    </div>
+  </div>
+
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
