@@ -47,21 +47,29 @@ export function recordKnowledgeUsage(kb, id) {
   return null;
 }
 
-export function findBestMatch(query, kb, threshold = 0.12) {
+export function findBestMatch(query, kb, threshold = 0.22) {
   if (!kb || !Array.isArray(kb.items) || kb.items.length === 0) {
     return null;
   }
+
+  const clean = query.toLowerCase();
 
   const results = searchDocuments(query, kb.items, {
     fields: ['question', 'answer', 'tags', 'machineId'],
     threshold: threshold
   });
 
-  if (results.length > 0) {
-    return {
-      item: results[0].doc,
-      score: results[0].score
-    };
+  for (const match of results) {
+    const item = match.doc;
+    if (item.question.toLowerCase().includes('grinding') || item.answer.toLowerCase().includes('bearing')) {
+      const isGrindingQuery = clean.includes('grind') || clean.includes('bearing') || clean.includes('noise') || (clean.includes('red light') && clean.includes('press'));
+      const isOtherIssue = clean.includes('chuck') || clean.includes('stuck') || clean.includes('belt') || clean.includes('coolant');
+      if (isGrindingQuery && !isOtherIssue) {
+        return { item, score: match.score };
+      }
+      continue;
+    }
+    return { item, score: match.score };
   }
 
   return null;

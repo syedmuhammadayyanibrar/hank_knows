@@ -921,6 +921,82 @@ h1.page-title {
   display: none;
 }
 
+.site-footer {
+  margin-top: 12px;
+  width: 100%;
+}
+
+.eval-card {
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.eval-card.hidden {
+  display: none;
+}
+
+.eval-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.eval-title {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.eval-link {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.eval-link:hover {
+  color: var(--muted);
+}
+
+.eval-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.eval-metric-item {
+  background-color: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.eval-metric-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.eval-metric-val {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
 @keyframes messageIn {
   from {
     opacity: 0;

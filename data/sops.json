@@ -1,56 +1,50 @@
 [
   {
-    "id": "SOP-101",
-    "title": "Minster 200T Mechanical Press Feed Clearing",
-    "machineId": "Press-03",
+    "id": "SOP-PRESS-01",
+    "title": "Press 4 Die Changeover Procedure",
+    "machineId": "Press 4",
     "tag": "SOP · Press changeover",
-    "keywords": ["press", "minster", "feed", "jam", "coil", "aluminum", "probe", "clear", "die", "clearance"],
-    "summary": "Standard feed jam clearing requires stopping the press at top dead center (TDC), engaging the flywheel brake, and verifying zero mechanical motion. Operators must use only an aluminum probe tool to release jammed strip material. Never use hardened steel pry bars inside carbide dies. Reset the pneumatic stock feeder to index stroke and verify feed pitch before cycle restart. If feed continues to bind under normal stroke pitch, log maintenance ticket.",
-    "gapNote": "Does not address recurring 5052 aluminum strip galling on feed guide pins caused by shop ambient humidity."
+    "keywords": [
+      "press", "press 4", "changeover", "change", "die", "chnage", "6 inch", "inch",
+      "tooling", "ram", "clamp", "shut height", "bed pins", "torque", "setup"
+    ],
+    "summary": "Press 4 die changeover procedure: Stop press at top dead center (TDC), engage flywheel brake, and unclamp hydraulic die clamps. Roll out previous die onto cart. Align new 6-inch die on bed pins, torque clamp bolts to 120 ft-lbs, and verify shut height clearance before running.",
+    "gapNote": "Does not address abnormal mechanical grinding noise or dry ram bearings."
   },
   {
-    "id": "SOP-102",
-    "title": "Amada Press Brake Hydraulic Temperature and Backgauge Calibration",
-    "machineId": "Brake-02",
-    "tag": "SOP · Press brake hydraulics",
-    "keywords": ["brake", "amada", "hydraulic", "temp", "temperature", "oil", "reservoir", "limit", "backgauge", "fluid"],
-    "summary": "Hydraulic oil operating range is 110°F to 130°F. If oil temperature exceeds 145°F, suspend operation and verify heat exchanger water valve is open. Reservoir capacity is 45 gallons ISO VG 46 anti-wear hydraulic oil. Check sight glass before morning cycle. Backgauge calibration requires homing all four axes (X1, X2, R, Z) through AMNC-PC manual jog screen prior to production runs.",
+    "id": "SOP-COOLANT-01",
+    "title": "CNC Mill 2 Coolant Refill and Concentration Protocol",
+    "machineId": "CNC Mill 2",
+    "tag": "SOP · Coolant refill",
+    "keywords": [
+      "coolant", "refill", "low", "cnc", "mill", "cnc mill 2", "refractometer",
+      "fill", "ratio", "water", "tank", "soluble", "synthetic"
+    ],
+    "summary": "CNC Mill 2 coolant refill: Check optical refractometer reading (target 8% to 10%). If coolant level is low on CNC Mill 2, refill reservoir through top filter port with a 10:1 ratio of water to water-soluble synthetic coolant concentrate. Verify pump manifold pressure at 40 PSI.",
     "gapNote": null
   },
   {
-    "id": "SOP-103",
-    "title": "Haas VF-4 Coolant Concentration and Chip Auger Protocol",
-    "machineId": "CNC-08",
-    "tag": "SOP · CNC coolant & auger",
-    "keywords": ["cnc", "haas", "vf-4", "coolant", "refractometer", "ratio", "concentration", "auger", "chips", "pressure"],
-    "summary": "Maintain water-soluble synthetic coolant concentration at 8% to 10% measured with optical refractometer. Fill water first, then add concentrate. Minimum flood coolant manifold pressure is 40 PSI. Chip conveyor auger must be toggled reverse for 3 seconds if chip buildup trips current limiter. Empty chip bin at 75% fill capacity.",
+    "id": "SOP-COMP-01",
+    "title": "Compressor A Pressure Fault Reset Procedure",
+    "machineId": "Compressor A",
+    "tag": "SOP · Compressor fault",
+    "keywords": [
+      "compressor", "compressor a", "pressure", "fault", "reset", "air", "receiver",
+      "discharge", "valve", "trip", "trips", "line pressure"
+    ],
+    "summary": "Compressor A pressure fault: Check main air receiver discharge valve and verify system pressure is below 125 PSI. Drain moisture condensation trap for 5 seconds. Press blue manual reset button on side control panel. If fault trips repeatedly, do not open high-voltage electrical enclosure.",
     "gapNote": null
   },
   {
-    "id": "SOP-104",
-    "title": "Zero Energy State Lockout / Tagout (LOTO) Protocol",
-    "machineId": "Press-03",
-    "tag": "SOP · LOTO safety",
-    "keywords": ["loto", "lockout", "tagout", "electrical", "480v", "cabinet", "power", "disconnect", "breaker"],
-    "summary": "Prior to any servicing, electrical cabinet access, or mechanical disassembly, equipment must be isolated from all energy sources. Turn main 480V disconnect handle to OFF, apply red safety padlock with personal tag, and verify zero voltage using an NFPA 70E rated meter. Only licensed maintenance technicians are authorized to open electrical enclosures.",
-    "gapNote": null
-  },
-  {
-    "id": "SOP-105",
-    "title": "Optical Light Curtain and Guard Interlock Integrity",
-    "machineId": "Brake-02",
-    "tag": "SOP · Interlock guard",
-    "keywords": ["interlock", "light curtain", "curtain", "guard", "sensor", "bypass", "jump", "safety", "flange"],
-    "summary": "Category 4 optical guarding and mechanical interlocks are mandatory safety barriers. Interlock circuits and light curtains must never be bypassed, jumped, taped, or modified. Any intentional defeat of safety devices results in immediate equipment lockout and disciplinary review.",
-    "gapNote": null
-  },
-  {
-    "id": "SOP-106",
-    "title": "Mazak Quick Turn 250 Chuck Pressure and Collet Maintenance",
-    "machineId": "Lathe-01",
-    "tag": "SOP · Lathe chuck pressure",
-    "keywords": ["lathe", "mazak", "chuck", "pressure", "collet", "hydraulic", "turning", "jaw"],
-    "summary": "Set hydraulic chuck gripping pressure between 2.0 and 2.5 MPa for standard round bar stock. For thin-walled tubing, reduce pressure to 1.2 MPa to prevent distortion. Grease master chuck jaws every 20 hours of spindle runtime with high-pressure molybdenum disulfide grease.",
+    "id": "SOP-LOTO-01",
+    "title": "Lockout / Tagout (LOTO) and Tag Placement Protocol",
+    "machineId": "Lathe 3",
+    "tag": "SOP · Lockout/tagout",
+    "keywords": [
+      "lockout", "tagout", "loto", "lathe", "tags", "tag", "lock", "padlock",
+      "breaker", "hasp", "disconnect", "zero energy", "isolation", "lathe 3"
+    ],
+    "summary": "Mandatory zero-energy state isolation before servicing machinery: Turn main disconnect handle to OFF, apply red safety padlock with personal tag directly onto the breaker lockout hasp. To lockout the lathe, isolate main 480V disconnect and verify zero energy with test start before maintenance.",
     "gapNote": null
   }
 ]

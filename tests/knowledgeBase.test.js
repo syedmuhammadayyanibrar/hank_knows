@@ -16,9 +16,9 @@ test('createKnowledgeBase: initializes empty or with provided items', () => {
 test('addKnowledgeItem and recordKnowledgeUsage: stores veteran answer and increments usage', () => {
   const kb = createKnowledgeBase();
   const item = addKnowledgeItem(kb, {
-    question: 'Press-03 coil feed sticking on 5052 aluminum strip',
-    answer: '5052 aluminum galls on guide pins in humidity. Clean rollers and apply dry lube spray.',
-    machineId: 'Press-03',
+    question: 'press 4 is making a grinding noise, red light on',
+    answer: 'Shut it down, the ram bearing is dry. Grease the left fitting with the red gun, 3 pumps, then restart.',
+    machineId: 'Press 4',
     capturedFrom: 'Hank',
     capturedAt: 'Today 07:16'
   });
@@ -33,14 +33,14 @@ test('addKnowledgeItem and recordKnowledgeUsage: stores veteran answer and incre
 test('findBestMatch: matches newly asked question against stored knowledge', () => {
   const kb = createKnowledgeBase();
   addKnowledgeItem(kb, {
-    question: 'Press-03 aluminum coil feed sticks every 40 strokes',
-    answer: '5052 aluminum galls on guide pins in humidity. Wipe rollers with dry lube spray.',
-    machineId: 'Press-03',
+    question: 'press 4 is making a grinding noise, red light on',
+    answer: 'Shut it down, the ram bearing is dry. Grease the left fitting with the red gun, 3 pumps, then restart.',
+    machineId: 'Press 4',
     capturedFrom: 'Hank'
   });
 
-  const match = findBestMatch('Press-03 coil feed is slipping and catching on aluminum stock', kb);
+  const match = findBestMatch('grinding sound from the press, red light', kb);
   assert.ok(match !== null);
-  assert.ok(match.item.answer.includes('dry lube spray'));
-  assert.ok(match.score > 0.1);
+  assert.ok(match.item.answer.includes('ram bearing'));
+  assert.ok(match.score > 0.15);
 });

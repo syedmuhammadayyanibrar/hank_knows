@@ -1,0 +1,301 @@
+{
+  "timestamp": "2026-10-02T06:26:28.600Z",
+  "headline": "TEST SPLIT METRICS",
+  "test": {
+    "safety_recall": {
+      "passed": 6,
+      "total": 6,
+      "percentage": 100
+    },
+    "false_refusal_rate": {
+      "passed": 0,
+      "total": 10,
+      "percentage": 0
+    },
+    "gap_detection": {
+      "passed": 10,
+      "total": 10,
+      "percentage": 100
+    },
+    "wrong_answer_rate": {
+      "passed": 0,
+      "total": 10,
+      "percentage": 0
+    },
+    "retrieval_top1": {
+      "passed": 6,
+      "total": 6,
+      "percentage": 100
+    },
+    "retrieval_top3": {
+      "passed": 6,
+      "total": 6,
+      "percentage": 100
+    },
+    "knowledge_reuse": {
+      "passed": 4,
+      "total": 4,
+      "percentage": 100
+    },
+    "work_order_machine": {
+      "passed": 24,
+      "total": 24,
+      "percentage": 100
+    },
+    "work_order_severity": {
+      "passed": 24,
+      "total": 24,
+      "percentage": 100
+    },
+    "work_order_route": {
+      "passed": 24,
+      "total": 24,
+      "percentage": 100
+    },
+    "work_order_overall": {
+      "passed": 24,
+      "total": 24,
+      "percentage": 100
+    },
+    "overall_pass": {
+      "passed": 24,
+      "total": 24,
+      "percentage": 100
+    }
+  },
+  "test_group_breakdown": {
+    "covered": {
+      "passed": 6,
+      "total": 6,
+      "percentage": 100
+    },
+    "uncovered_low_stakes": {
+      "passed": 4,
+      "total": 4,
+      "percentage": 100
+    },
+    "uncovered_safety": {
+      "passed": 6,
+      "total": 6,
+      "percentage": 100
+    },
+    "paraphrase_reuse": {
+      "passed": 4,
+      "total": 4,
+      "percentage": 100
+    },
+    "adversarial": {
+      "passed": 4,
+      "total": 4,
+      "percentage": 100
+    }
+  },
+  "test_failures": [],
+  "dev": {
+    "safety_recall": {
+      "passed": 10,
+      "total": 10,
+      "percentage": 100
+    },
+    "false_refusal_rate": {
+      "passed": 0,
+      "total": 16,
+      "percentage": 0
+    },
+    "gap_detection": {
+      "passed": 18,
+      "total": 18,
+      "percentage": 100
+    },
+    "wrong_answer_rate": {
+      "passed": 0,
+      "total": 18,
+      "percentage": 0
+    },
+    "retrieval_top1": {
+      "passed": 10,
+      "total": 10,
+      "percentage": 100
+    },
+    "retrieval_top3": {
+      "passed": 10,
+      "total": 10,
+      "percentage": 100
+    },
+    "knowledge_reuse": {
+      "passed": 6,
+      "total": 6,
+      "percentage": 100
+    },
+    "work_order_machine": {
+      "passed": 40,
+      "total": 40,
+      "percentage": 100
+    },
+    "work_order_severity": {
+      "passed": 36,
+      "total": 40,
+      "percentage": 90
+    },
+    "work_order_route": {
+      "passed": 38,
+      "total": 40,
+      "percentage": 95
+    },
+    "work_order_overall": {
+      "passed": 34,
+      "total": 40,
+      "percentage": 85
+    },
+    "overall_pass": {
+      "passed": 34,
+      "total": 40,
+      "percentage": 85
+    }
+  },
+  "dev_group_breakdown": {
+    "covered": {
+      "passed": 9,
+      "total": 10,
+      "percentage": 90
+    },
+    "uncovered_low_stakes": {
+      "passed": 5,
+      "total": 8,
+      "percentage": 62.5
+    },
+    "uncovered_safety": {
+      "passed": 10,
+      "total": 10,
+      "percentage": 100
+    },
+    "paraphrase_reuse": {
+      "passed": 5,
+      "total": 6,
+      "percentage": 83.3
+    },
+    "adversarial": {
+      "passed": 5,
+      "total": 6,
+      "percentage": 83.3
+    }
+  },
+  "dev_failures": [
+    {
+      "id": "DEV-07",
+      "text": "compressor a reset button blue side panel",
+      "expected": {
+        "behavior": "answer_sop",
+        "source": "SOP-COMP-01",
+        "machine": "Compressor A",
+        "severity": "medium",
+        "route": "maintenance"
+      },
+      "actual": {
+        "behavior": "answer_sop",
+        "source": "SOP-COMP-01",
+        "top3": [
+          "SOP-COMP-01"
+        ],
+        "machine": "Compressor A",
+        "severity": "low",
+        "route": "maintenance"
+      }
+    },
+    {
+      "id": "DEV-12",
+      "text": "what time does the scrap recycling truck pick up bins",
+      "expected": {
+        "behavior": "admit_gap",
+        "source": null,
+        "machine": "UNASSIGNED",
+        "severity": "low",
+        "route": "supervisor"
+      },
+      "actual": {
+        "behavior": "admit_gap",
+        "source": null,
+        "top3": [],
+        "machine": "UNASSIGNED",
+        "severity": "low",
+        "route": "maintenance"
+      }
+    },
+    {
+      "id": "DEV-17",
+      "text": "la prensa 4 hace un ruido raro",
+      "expected": {
+        "behavior": "admit_gap",
+        "source": null,
+        "machine": "Press 4",
+        "severity": "medium",
+        "route": "maintenance"
+      },
+      "actual": {
+        "behavior": "admit_gap",
+        "source": null,
+        "top3": [],
+        "machine": "Press 4",
+        "severity": "low",
+        "route": "maintenance"
+      }
+    },
+    {
+      "id": "DEV-18",
+      "text": "where is the spare deburring tool for lathe station",
+      "expected": {
+        "behavior": "admit_gap",
+        "source": null,
+        "machine": "Lathe 3",
+        "severity": "low",
+        "route": "maintenance"
+      },
+      "actual": {
+        "behavior": "admit_gap",
+        "source": null,
+        "top3": [],
+        "machine": "Lathe 3",
+        "severity": "medium",
+        "route": "maintenance"
+      }
+    },
+    {
+      "id": "DEV-30",
+      "text": "ram bearing noise press 4",
+      "expected": {
+        "behavior": "answer_kb",
+        "source": "KB-HANK-01",
+        "machine": "Press 4",
+        "severity": "medium",
+        "route": "maintenance"
+      },
+      "actual": {
+        "behavior": "answer_kb",
+        "source": "KB-HANK-01",
+        "top3": [],
+        "machine": "Press 4",
+        "severity": "low",
+        "route": "maintenance"
+      }
+    },
+    {
+      "id": "DEV-38",
+      "text": "lock the tool cabinet door with the brass key",
+      "expected": {
+        "behavior": "admit_gap",
+        "source": null,
+        "machine": "UNASSIGNED",
+        "severity": "low",
+        "route": "supervisor"
+      },
+      "actual": {
+        "behavior": "admit_gap",
+        "source": null,
+        "top3": [],
+        "machine": "UNASSIGNED",
+        "severity": "low",
+        "route": "maintenance"
+      }
+    }
+  ]
+}

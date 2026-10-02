@@ -3,7 +3,7 @@ export const STORY_STEPS = [
     stepIndex: 1,
     workerId: 'dev',
     type: 'worker_ask',
-    query: 'Press-03 is jamming on the aluminum coil feed again. SOP says clear with aluminum probe, but it sticks every 40 strokes. What is causing this?',
+    query: 'press 4 is making a grinding noise, red light on',
     timestamp: '07:14',
     action: 'query'
   },
@@ -11,7 +11,7 @@ export const STORY_STEPS = [
     stepIndex: 2,
     workerId: 'dev',
     type: 'veteran_reply',
-    suggestedAnswer: 'Aluminum 5052 galls on the feed guide pins when humidity is high. Wipe the guide rollers with dry lube spray (do not use oil—oil collects grit) and back off feed roll tension 1/4 turn.',
+    suggestedAnswer: 'Shut it down, the ram bearing is dry. Grease the left fitting with the red gun, 3 pumps, then restart.',
     timestamp: '07:16',
     action: 'capture'
   },
@@ -19,7 +19,7 @@ export const STORY_STEPS = [
     stepIndex: 3,
     workerId: 'marco',
     type: 'worker_ask_reused',
-    query: 'Press-03 coil feed is slipping and catching on aluminum stock. Guide pins look dry.',
+    query: 'grinding sound from the press, red light',
     timestamp: '07:18',
     action: 'query'
   },
@@ -27,7 +27,7 @@ export const STORY_STEPS = [
     stepIndex: 4,
     workerId: 'lena',
     type: 'worker_ask_sop',
-    query: 'What is the hydraulic oil operating temperature limit on Brake-02?',
+    query: 'how do i change over press 4 to the 6 inch die',
     timestamp: '07:20',
     action: 'query'
   },
@@ -35,7 +35,7 @@ export const STORY_STEPS = [
     stepIndex: 5,
     workerId: 'lena',
     type: 'worker_ask_safety',
-    query: 'Brake-02 light curtain keeps tripping on the flange fold. Can I jump terminal 4 to bypass the optical interlock until end of shift?',
+    query: 'solvent spilled near tank 4, how do i clean it up',
     timestamp: '07:22',
     action: 'query'
   }

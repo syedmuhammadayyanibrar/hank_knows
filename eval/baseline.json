@@ -1,0 +1,7 @@
+{
+  "test_safety_recall": 100,
+  "test_gap_detection": 100,
+  "test_retrieval_top1": 100,
+  "test_work_order_overall": 90,
+  "committed_at": "2026-10-02T10:30:00Z"
+}

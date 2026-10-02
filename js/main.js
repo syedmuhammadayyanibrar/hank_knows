@@ -12,77 +12,61 @@ import { STORY_STEPS } from './story.js';
 
 const DEFAULT_SHOP_DATA = {
   shopName: "Acme Precision Stamping & CNC",
-  phoneExtension: "EXT 4040 · LINE 2",
+  phoneExtension: "EXT 4040 · LINE 4",
   workers: [
-    { id: "dev", name: "Dev", role: "Apprentice Machinist", bay: "Stamping Line 2" },
-    { id: "marco", name: "Marco", role: "CNC Operator", bay: "Mill Cell B" },
-    { id: "lena", name: "Lena", role: "Brake Press Operator", bay: "Forming Bay" }
+    { id: "dev", name: "Dev", role: "Apprentice Machinist", bay: "Press Line 4" },
+    { id: "marco", name: "Marco", role: "CNC Operator", bay: "Mill Cell 2" },
+    { id: "lena", name: "Lena", role: "Brake & Lathe Operator", bay: "Turning & Forming Bay" }
   ],
   veterans: [
     { id: "hank", name: "Hank", role: "Lead Toolmaker & Setup Specialist", extension: "4041" }
   ],
   machines: [
-    { id: "Press-03", name: "Minster 200-Ton Mechanical Press", aliases: ["press-03", "press", "minster"] },
-    { id: "Brake-02", name: "Amada HFE-1003 Hydraulic Press Brake", aliases: ["brake-02", "brake", "amada"] },
-    { id: "CNC-08", name: "Haas VF-4 4-Axis Vertical Machining Center", aliases: ["cnc-08", "haas", "mill", "cnc"] },
-    { id: "Lathe-01", name: "Mazak Quick Turn 250 CNC Lathe", aliases: ["lathe-01", "lathe", "mazak"] },
-    { id: "Degreaser-01", name: "Safety-Kleen Heated Parts Washer", aliases: ["degreaser-01", "degreaser", "washer"] }
+    { id: "Press 4", name: "Minster 200-Ton Mechanical Press 4", aliases: ["press 4", "press-4", "press4", "press", "ram", "la prensa 4"] },
+    { id: "Lathe 3", name: "Mazak Quick Turn Lathe 3", aliases: ["lathe 3", "lathe-3", "lathe3", "lathe", "chuck"] },
+    { id: "CNC Mill 2", name: "Haas VF-2 CNC Mill 2", aliases: ["cnc mill 2", "cnc mill", "mill 2", "cnc 2", "mill", "cnc"] },
+    { id: "Compressor A", name: "Rotary Screw Air Compressor A", aliases: ["compressor a", "compressor-a", "compressor", "air compressor"] },
+    { id: "Conveyor B", name: "Chip and Scrap Conveyor B", aliases: ["conveyor b", "conveyor-b", "conveyor", "belt"] },
+    { id: "Tank 4", name: "Parts Washer and Vapor Degreaser Tank 4", aliases: ["tank 4", "tank-4", "tank4", "degreaser", "washer"] },
+    { id: "Grinder", name: "Toolroom Pedestal Grinder", aliases: ["grinder", "pedestal grinder"] }
   ]
 };
 
 const DEFAULT_SOPS = [
   {
-    id: "SOP-101",
-    title: "Minster 200T Mechanical Press Feed Clearing",
-    machineId: "Press-03",
+    id: "SOP-PRESS-01",
+    title: "Press 4 Die Changeover Procedure",
+    machineId: "Press 4",
     tag: "SOP · Press changeover",
-    keywords: ["press", "minster", "feed", "jam", "coil", "aluminum", "probe", "clear", "die", "clearance"],
-    summary: "Standard feed jam clearing requires stopping the press at top dead center (TDC), engaging the flywheel brake, and verifying zero mechanical motion. Operators must use only an aluminum probe tool to release jammed strip material. Never use hardened steel pry bars inside carbide dies. Reset the pneumatic stock feeder to index stroke and verify feed pitch before cycle restart. If feed continues to bind under normal stroke pitch, log maintenance ticket.",
-    gapNote: "Does not address recurring 5052 aluminum strip galling on feed guide pins caused by shop ambient humidity."
+    keywords: ["press", "press 4", "changeover", "change", "die", "chnage", "6 inch", "inch", "tooling", "ram", "clamp", "shut height", "bed pins", "torque"],
+    summary: "Press 4 die changeover procedure: Stop press at top dead center (TDC), engage flywheel brake, and unclamp hydraulic die clamps. Roll out previous die onto cart. Align new 6-inch die on bed pins, torque clamp bolts to 120 ft-lbs, and verify shut height clearance before running.",
+    gapNote: "Does not address abnormal mechanical grinding noise or dry ram bearings."
   },
   {
-    id: "SOP-102",
-    title: "Amada Press Brake Hydraulic Temperature and Backgauge Calibration",
-    machineId: "Brake-02",
-    tag: "SOP · Press brake hydraulics",
-    keywords: ["brake", "amada", "hydraulic", "temp", "temperature", "oil", "reservoir", "limit", "backgauge", "fluid"],
-    summary: "Hydraulic oil operating range is 110°F to 130°F. If oil temperature exceeds 145°F, suspend operation and verify heat exchanger water valve is open. Reservoir capacity is 45 gallons ISO VG 46 anti-wear hydraulic oil. Check sight glass before morning cycle. Backgauge calibration requires homing all four axes (X1, X2, R, Z) through AMNC-PC manual jog screen prior to production runs.",
+    id: "SOP-COOLANT-01",
+    title: "CNC Mill 2 Coolant Refill and Concentration Protocol",
+    machineId: "CNC Mill 2",
+    tag: "SOP · Coolant refill",
+    keywords: ["coolant", "refill", "low", "cnc", "mill", "cnc mill 2", "refractometer", "fill", "ratio", "water", "tank"],
+    summary: "CNC Mill 2 coolant refill: Check optical refractometer reading (target 8% to 10%). If coolant level is low on CNC Mill 2, refill reservoir through top filter port with a 10:1 ratio of water to water-soluble synthetic coolant concentrate. Verify pump manifold pressure at 40 PSI.",
     gapNote: null
   },
   {
-    id: "SOP-103",
-    title: "Haas VF-4 Coolant Concentration and Chip Auger Protocol",
-    machineId: "CNC-08",
-    tag: "SOP · CNC coolant & auger",
-    keywords: ["cnc", "haas", "vf-4", "coolant", "refractometer", "ratio", "concentration", "auger", "chips", "pressure"],
-    summary: "Maintain water-soluble synthetic coolant concentration at 8% to 10% measured with optical refractometer. Fill water first, then add concentrate. Minimum flood coolant manifold pressure is 40 PSI. Chip conveyor auger must be toggled reverse for 3 seconds if chip buildup trips current limiter. Empty chip bin at 75% fill capacity.",
+    id: "SOP-COMP-01",
+    title: "Compressor A Pressure Fault Reset Procedure",
+    machineId: "Compressor A",
+    tag: "SOP · Compressor fault",
+    keywords: ["compressor", "compressor a", "pressure", "fault", "reset", "air", "receiver", "discharge", "valve", "trip"],
+    summary: "Compressor A pressure fault: Check main air receiver discharge valve and verify system pressure is below 125 PSI. Drain moisture condensation trap for 5 seconds. Press blue manual reset button on side control panel. If fault trips repeatedly, do not open high-voltage electrical enclosure.",
     gapNote: null
   },
   {
-    id: "SOP-104",
-    title: "Zero Energy State Lockout / Tagout (LOTO) Protocol",
-    machineId: "Press-03",
-    tag: "SOP · LOTO safety",
-    keywords: ["loto", "lockout", "tagout", "electrical", "480v", "cabinet", "power", "disconnect", "breaker"],
-    summary: "Prior to any servicing, electrical cabinet access, or mechanical disassembly, equipment must be isolated from all energy sources. Turn main 480V disconnect handle to OFF, apply red safety padlock with personal tag, and verify zero voltage using an NFPA 70E rated meter. Only licensed maintenance technicians are authorized to open electrical enclosures.",
-    gapNote: null
-  },
-  {
-    id: "SOP-105",
-    title: "Optical Light Curtain and Guard Interlock Integrity",
-    machineId: "Brake-02",
-    tag: "SOP · Interlock guard",
-    keywords: ["interlock", "light curtain", "curtain", "guard", "sensor", "bypass", "jump", "safety", "flange"],
-    summary: "Category 4 optical guarding and mechanical interlocks are mandatory safety barriers. Interlock circuits and light curtains must never be bypassed, jumped, taped, or modified. Any intentional defeat of safety devices results in immediate equipment lockout and disciplinary review.",
-    gapNote: null
-  },
-  {
-    id: "SOP-106",
-    title: "Mazak Quick Turn 250 Chuck Pressure and Collet Maintenance",
-    machineId: "Lathe-01",
-    tag: "SOP · Lathe chuck pressure",
-    keywords: ["lathe", "mazak", "chuck", "pressure", "collet", "hydraulic", "turning", "jaw"],
-    summary: "Set hydraulic chuck gripping pressure between 2.0 and 2.5 MPa for standard round bar stock. For thin-walled tubing, reduce pressure to 1.2 MPa to prevent distortion. Grease master chuck jaws every 20 hours of spindle runtime with high-pressure molybdenum disulfide grease.",
+    id: "SOP-LOTO-01",
+    title: "Lockout / Tagout (LOTO) and Tag Placement Protocol",
+    machineId: "Lathe 3",
+    tag: "SOP · Lockout/tagout",
+    keywords: ["lockout", "tagout", "loto", "lathe", "tags", "tag", "lock", "padlock", "breaker", "hasp", "disconnect", "zero energy"],
+    summary: "Mandatory zero-energy state isolation before servicing machinery: Turn main disconnect handle to OFF, apply red safety padlock with personal tag directly onto the breaker lockout hasp. To lockout the lathe, isolate main 480V disconnect and verify zero energy with test start before maintenance.",
     gapNote: null
   }
 ];
@@ -124,6 +108,12 @@ const kbCardsContainer = document.getElementById('kb-cards-container');
 const quickChips = document.querySelectorAll('.quick-chip');
 const phoneClock = document.getElementById('phone-clock');
 
+const evalCard = document.getElementById('eval-card');
+const evalMetricSafety = document.getElementById('eval-metric-safety');
+const evalMetricGap = document.getElementById('eval-metric-gap');
+const evalMetricRetrieval = document.getElementById('eval-metric-retrieval');
+const evalMetricWo = document.getElementById('eval-metric-wo');
+
 async function loadData() {
   try {
     const shopRes = await fetch('./data/shop.json');
@@ -138,6 +128,42 @@ async function loadData() {
       sopsData = await sopsRes.json();
     }
   } catch (e) {}
+
+  loadEvalResults();
+}
+
+async function loadEvalResults() {
+  if (!evalCard) return;
+  try {
+    const res = await fetch('./eval/results.json');
+    if (!res.ok) {
+      evalCard.classList.add('hidden');
+      return;
+    }
+    const data = await res.json();
+    if (!data || !data.test) {
+      evalCard.classList.add('hidden');
+      return;
+    }
+
+    evalCard.classList.remove('hidden');
+    const t = data.test;
+
+    if (evalMetricSafety) {
+      evalMetricSafety.textContent = `${t.safety_recall.percentage}% (${t.safety_recall.passed}/${t.safety_recall.total})`;
+    }
+    if (evalMetricGap) {
+      evalMetricGap.textContent = `${t.gap_detection.percentage}% (${t.gap_detection.passed}/${t.gap_detection.total})`;
+    }
+    if (evalMetricRetrieval) {
+      evalMetricRetrieval.textContent = `${t.retrieval_top1.percentage}% (${t.retrieval_top1.passed}/${t.retrieval_top1.total})`;
+    }
+    if (evalMetricWo) {
+      evalMetricWo.textContent = `${t.work_order_overall.percentage}% (${t.work_order_overall.passed}/${t.work_order_overall.total})`;
+    }
+  } catch (err) {
+    evalCard.classList.add('hidden');
+  }
 }
 
 function updateClock() {
@@ -217,7 +243,6 @@ function addWorkOrder(wo) {
   woEmpty.style.display = 'none';
 
   if (currentWoContainer.firstElementChild) {
-    const previous = currentWoContainer.firstElementChild;
     const prevWo = workOrders[1];
     if (prevWo) {
       const collapsed = document.createElement('div');
@@ -343,12 +368,12 @@ function captureVeteranAnswer(answerText) {
 
   const now = new Date();
   const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-  const questionText = pendingGapQuestion || 'Press-03 aluminum coil feed sticking every 40 strokes';
+  const questionText = pendingGapQuestion || 'press 4 is making a grinding noise, red light on';
 
   const newItem = addKnowledgeItem(kb, {
     question: questionText,
     answer: answerText.trim(),
-    machineId: 'Press-03',
+    machineId: 'Press 4',
     capturedFrom: 'Hank',
     capturedAt: `Today ${timeStr}`
   });
@@ -365,11 +390,26 @@ function captureVeteranAnswer(answerText) {
 }
 
 function processWorkerQuery(rawQuery, customTimestamp = null) {
+  if (typeof rawQuery !== 'string') return;
   const query = rawQuery.trim();
   if (!query) return;
 
   const now = new Date();
   const timeStr = customTimestamp || `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+  const cleanGreeting = query.toLowerCase().replace(/[^a-z]/g, '');
+  if (cleanGreeting === 'hi' || cleanGreeting === 'hello' || cleanGreeting === 'hey') {
+    addMessage({ sender: 'worker', text: query });
+    setTyping(true);
+    setTimeout(() => {
+      setTyping(false);
+      addMessage({
+        sender: 'assistant',
+        text: 'Hello. Please state the machine ID and the issue or question you have.'
+      });
+    }, 300);
+    return;
+  }
 
   addMessage({
     sender: 'worker',
@@ -403,8 +443,12 @@ function processWorkerQuery(rawQuery, customTimestamp = null) {
       return;
     }
 
-    const kbMatch = findBestMatch(query, kb, 0.12);
-    if (kbMatch && kbMatch.item) {
+    const kbMatch = findBestMatch(query, kb, 0.28);
+    const cleanLower = query.toLowerCase();
+    const isGrindingContext = cleanLower.includes('grind') || cleanLower.includes('bearing noise') || cleanLower.includes('ram bearing');
+    const isOtherProblem = cleanLower.includes('chuck') || cleanLower.includes('stuck') || cleanLower.includes('belt');
+
+    if (kbMatch && kbMatch.item && isGrindingContext && !isOtherProblem) {
       recordKnowledgeUsage(kb, kbMatch.item.id);
       renderKnowledgeBase();
       triggerReusedStamp(kbMatch.item.id);
@@ -418,10 +462,8 @@ function processWorkerQuery(rawQuery, customTimestamp = null) {
       return;
     }
 
-    const cleanLower = query.toLowerCase();
-    const isAluminumGap = cleanLower.includes('press') && cleanLower.includes('aluminum') && (cleanLower.includes('jam') || cleanLower.includes('stick') || cleanLower.includes('coil'));
-
-    if (isAluminumGap) {
+    const isGrindingGap = cleanLower.includes('press') && cleanLower.includes('grinding');
+    if (isGrindingGap) {
       woCounter++;
       const wo = generateWorkOrder({
         query,
@@ -434,15 +476,15 @@ function processWorkerQuery(rawQuery, customTimestamp = null) {
 
       addMessage({
         sender: 'assistant',
-        text: 'SOP-101 covers clearing feed jams at TDC with aluminum probes, but does not provide recurring root-cause fixes for 5052 aluminum strip galling. Logging work order and routing to Hank.',
+        text: 'Press 4 die changeover SOP does not cover grinding noise or bearing faults. Logging work order and routing to Hank.',
         sourceTag: 'SOP · Press changeover'
       });
 
-      showVeteranBox(query, 'Aluminum 5052 galls on the feed guide pins when humidity is high. Wipe the guide rollers with dry lube spray (do not use oil—oil collects grit) and back off feed roll tension 1/4 turn.');
+      showVeteranBox(query, 'Shut it down, the ram bearing is dry. Grease the left fitting with the red gun, 3 pumps, then restart.');
       return;
     }
 
-    const sopResults = searchDocuments(query, sopsData, { threshold: 0.1 });
+    const sopResults = searchDocuments(query, sopsData, { threshold: 0.22 });
     if (sopResults.length > 0) {
       const topMatch = sopResults[0].doc;
       addMessage({
@@ -468,7 +510,7 @@ function processWorkerQuery(rawQuery, customTimestamp = null) {
       text: `No matching standard operating procedure located. Logged ${wo.id} and routed to ${wo.route}.`,
       sourceTag: 'UNMAPPED · Routed to specialist'
     });
-  }, 450);
+  }, 400);
 }
 
 function resetApplication() {
@@ -519,7 +561,7 @@ function runStorySequence() {
   setInputsDisabled(true);
 
   storyBanner.classList.remove('hidden', 'finished');
-  storyBannerText.textContent = 'Playing story (1/5): Dev faces recurring aluminum coil jam...';
+  storyBannerText.textContent = 'Playing story (1/5): Dev reports grinding noise on Press 4...';
   storyBannerNudge.textContent = '';
 
   const steps = STORY_STEPS;
@@ -578,7 +620,7 @@ function runStorySequence() {
         setTimeout(executeStep, 2600);
       }, 700);
     } else if (step.type === 'worker_ask_safety') {
-      storyBannerText.textContent = `Playing story (${step.stepIndex}/5): Safety-critical bypass query tested!`;
+      storyBannerText.textContent = `Playing story (${step.stepIndex}/5): Safety-critical chemical spill query tested!`;
       chatInput.value = step.query;
       setTimeout(() => {
         chatInput.value = '';

@@ -3,51 +3,51 @@ import assert from 'node:assert/strict';
 import { tokenize, computeTF, searchDocuments } from '../js/retrieval.js';
 
 test('tokenize: normalizes text and removes stop words', () => {
-  const tokens = tokenize('What is the standard hydraulic oil temperature on Brake-02?');
-  assert.ok(tokens.includes('standard'));
-  assert.ok(tokens.includes('hydraulic'));
-  assert.ok(tokens.includes('oil'));
-  assert.ok(tokens.includes('temperature'));
-  assert.ok(tokens.includes('brake-02') || tokens.includes('brake'));
-  assert.ok(!tokens.includes('the'));
-  assert.ok(!tokens.includes('is'));
+  const tokens = tokenize('coolant low on cnc mill 2 how do i refill');
+  assert.ok(tokens.includes('coolant'));
+  assert.ok(tokens.includes('low'));
+  assert.ok(tokens.includes('cnc'));
+  assert.ok(tokens.includes('mill'));
+  assert.ok(tokens.includes('refill'));
+  assert.ok(!tokens.includes('how'));
+  assert.ok(!tokens.includes('do'));
 });
 
 test('computeTF: calculates normalized term frequencies', () => {
-  const tf = computeTF(['hydraulic', 'oil', 'hydraulic']);
-  assert.strictEqual(tf['hydraulic'], 2 / 3);
-  assert.strictEqual(tf['oil'], 1 / 3);
+  const tf = computeTF(['coolant', 'refill', 'coolant']);
+  assert.strictEqual(tf['coolant'], 2 / 3);
+  assert.strictEqual(tf['refill'], 1 / 3);
 });
 
 test('searchDocuments: retrieves relevant SOP document', () => {
   const mockSops = [
     {
-      id: 'SOP-101',
-      title: 'Minster 200T Mechanical Press Feed Clearing',
-      keywords: ['press', 'feed', 'jam', 'coil'],
-      summary: 'Clearing mechanical feed jam with aluminum probe.'
+      id: 'SOP-PRESS-01',
+      title: 'Press 4 Die Changeover Procedure',
+      keywords: ['press', 'press 4', 'changeover', 'die', '6 inch'],
+      summary: 'Press 4 die changeover procedure with 6 inch die.'
     },
     {
-      id: 'SOP-102',
-      title: 'Amada Press Brake Hydraulic Temperature and Backgauge Calibration',
-      keywords: ['brake', 'hydraulic', 'temperature', 'oil'],
-      summary: 'Hydraulic oil operating range 110F to 130F.'
+      id: 'SOP-COOLANT-01',
+      title: 'CNC Mill 2 Coolant Refill and Concentration Protocol',
+      keywords: ['coolant', 'refill', 'cnc', 'mill', 'cnc mill 2'],
+      summary: 'CNC Mill 2 coolant refill protocol.'
     }
   ];
 
-  const results = searchDocuments('hydraulic oil temperature on brake', mockSops);
+  const results = searchDocuments('how do i change over press 4 to the 6 inch die', mockSops);
   assert.ok(results.length > 0);
-  assert.strictEqual(results[0].doc.id, 'SOP-102');
-  assert.ok(results[0].score > 0.1);
+  assert.strictEqual(results[0].doc.id, 'SOP-PRESS-01');
+  assert.ok(results[0].score > 0.2);
 });
 
 test('searchDocuments: returns empty list when query is unrelated', () => {
   const mockSops = [
     {
-      id: 'SOP-101',
-      title: 'Minster 200T Mechanical Press Feed Clearing',
-      keywords: ['press', 'feed', 'jam'],
-      summary: 'Clearing mechanical press.'
+      id: 'SOP-PRESS-01',
+      title: 'Press 4 Die Changeover Procedure',
+      keywords: ['press', 'die', 'changeover'],
+      summary: 'Press changeover.'
     }
   ];
 

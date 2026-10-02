@@ -1,28 +1,38 @@
-const MACHINE_DATABASE = [
+const MACHINE_PATTERNS = [
   {
-    id: 'Press-03',
-    name: 'Minster 200-Ton Mechanical Press',
-    patterns: ['press-03', 'press 03', 'press 3', 'press3', 'minster', 'stamping press', 'press', 'feed roll', 'coil feed']
+    id: 'Press 4',
+    name: 'Minster 200-Ton Mechanical Press 4',
+    aliases: ['press 4', 'press-4', 'press4', 'pres 4', 'pres-4', 'pres4', 'press', 'ram', 'la prensa 4', 'prensa 4', 'die change', 'die chnage', 'die is stuck']
   },
   {
-    id: 'Brake-02',
-    name: 'Amada HFE-1003 Hydraulic Press Brake',
-    patterns: ['brake-02', 'brake 02', 'brake 2', 'brake2', 'amada', 'press brake', 'brake', 'backgauge', 'flange fold']
+    id: 'Lathe 3',
+    name: 'Mazak Quick Turn Lathe 3',
+    aliases: ['lathe 3', 'lathe-3', 'lathe3', 'lathe', 'chuck', 'mazak']
   },
   {
-    id: 'CNC-08',
-    name: 'Haas VF-4 4-Axis Vertical Machining Center',
-    patterns: ['cnc-08', 'cnc 08', 'cnc 8', 'cnc8', 'haas vf-4', 'haas vf4', 'haas', 'vertical mill', 'mill cell', 'mill', 'cnc', 'auger', 'spindle']
+    id: 'CNC Mill 2',
+    name: 'Haas VF-2 CNC Mill 2',
+    aliases: ['cnc mill 2', 'cnc mill', 'mill 2', 'cnc 2', 'haas', 'mill', 'cnc', 'coolant tank', 'coolant reservoir', 'coolant']
   },
   {
-    id: 'Lathe-01',
-    name: 'Mazak Quick Turn 250 CNC Lathe',
-    patterns: ['lathe-01', 'lathe 01', 'lathe 1', 'lathe1', 'mazak', 'quick turn', 'turning bay', 'lathe', 'chuck', 'collet']
+    id: 'Compressor A',
+    name: 'Rotary Screw Air Compressor A',
+    aliases: ['compressor a', 'compressor-a', 'compressor', 'air compressor', 'compressor panel']
   },
   {
-    id: 'Degreaser-01',
-    name: 'Safety-Kleen Heated Parts Washer',
-    patterns: ['degreaser-01', 'degreaser 01', 'degreaser 1', 'degreaser', 'safety-kleen', 'washer', 'parts washer', 'solvent tank', 'wash station']
+    id: 'Conveyor B',
+    name: 'Chip and Scrap Conveyor B',
+    aliases: ['conveyor b', 'conveyor-b', 'conveyor', 'belt']
+  },
+  {
+    id: 'Tank 4',
+    name: 'Parts Washer and Vapor Degreaser Tank 4',
+    aliases: ['tank 4', 'tank-4', 'tank4', 'degreaser', 'washer', 'parts washer', 'solvent tank', 'solvent']
+  },
+  {
+    id: 'Grinder',
+    name: 'Toolroom Pedestal Grinder',
+    aliases: ['grinder', 'pedestal grinder', 'bench grinder']
   }
 ];
 
@@ -31,19 +41,21 @@ export function extractMachine(text, shopData = null) {
     return { id: 'UNASSIGNED', name: 'General / Floor' };
   }
 
-  const clean = text.toLowerCase();
+  let clean = text.toLowerCase().replace(/['"’]/g, '');
+  clean = clean.replace(/presss+/g, 'press');
 
   const machines = (shopData && shopData.machines)
     ? shopData.machines.map(m => ({
         id: m.id,
         name: m.name,
-        patterns: [m.id.toLowerCase(), ...(m.aliases || []).map(a => a.toLowerCase())]
+        aliases: [m.id.toLowerCase(), ...(m.aliases || []).map(a => a.toLowerCase())]
       }))
-    : MACHINE_DATABASE;
+    : MACHINE_PATTERNS;
 
   for (const m of machines) {
-    for (const pat of m.patterns) {
-      if (clean.includes(pat)) {
+    for (const alias of m.aliases) {
+      const regex = new RegExp(`(^|[^a-z0-9])${alias.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}([^a-z0-9]|$)`, 'i');
+      if (regex.test(clean)) {
         return { id: m.id, name: m.name };
       }
     }
@@ -60,10 +72,16 @@ export function extractSeverity(text, safetyResult = null) {
   if (typeof text !== 'string') return 'LOW';
   const clean = text.toLowerCase();
 
+  if (clean.includes('fire up')) {
+    return 'LOW';
+  }
+
   const highSignals = [
-    'smoke', 'fire', 'spark', 'sparking', 'leak', 'leaking', 'burst', 'blow',
-    'hydraulic burst', 'overheat', 'overheating', 'hazard', 'severe', 'jammed at bottom',
-    '480v', 'arc flash', 'critical', 'injury', 'blood', 'broken die', 'shattered'
+    'smoke', 'fire', 'flame', 'spark', 'sparking', 'burst', 'blow', 'amputation',
+    'severe bleeding', 'bleeding severely', 'bleeding heavily', 'trapped', 'crushed',
+    'pinned past redline', 'bulging like a balloon', 'hydraulic burst', '480v',
+    'arc flash', 'critical', 'spill', 'spilled', 'wash down drain', 'storm drain',
+    'climb inside', 'someone got cut', 'cut arm badly'
   ];
 
   for (const signal of highSignals) {
@@ -71,9 +89,11 @@ export function extractSeverity(text, safetyResult = null) {
   }
 
   const mediumSignals = [
-    'jam', 'jamming', 'stick', 'sticking', 'misfeed', 'chatter', 'vibrate',
+    'jam', 'jamming', 'jammed', 'stick', 'sticking', 'misfeed', 'chatter', 'vibrate',
     'vibration', 'burr', 'burrs', 'rough cut', 'slip', 'slipping', 'slow',
-    'tolerance', 'out of spec', 'catching', 'galling', 'drag', 'hesitation'
+    'tolerance', 'out of spec', 'catching', 'galling', 'drag', 'hesitation',
+    'leak', 'leaking', 'overheat', 'overheating', 'bind', 'binding', 'grind',
+    'grinding', 'loose', 'stuck', 'fault', 'not closing', 'slack'
   ];
 
   for (const signal of mediumSignals) {
@@ -85,42 +105,61 @@ export function extractSeverity(text, safetyResult = null) {
 
 export function extractRoute(text, machineId, severity, safetyResult = null) {
   if ((safetyResult && safetyResult.isRefusal) || severity === 'HIGH') {
-    if (safetyResult && safetyResult.isRefusal) {
-      return 'SAFETY / EHS';
-    }
-    const clean = typeof text === 'string' ? text.toLowerCase() : '';
-    if (clean.includes('electrical') || clean.includes('voltage') || clean.includes('wire') || clean.includes('breaker')) {
-      return 'Electrical Maintenance';
-    }
-    if (clean.includes('hydraulic') || clean.includes('leak') || clean.includes('pressure') || clean.includes('oil')) {
-      return 'Hydraulics & Mechanical';
-    }
     return 'SAFETY / EHS';
   }
 
   const clean = typeof text === 'string' ? text.toLowerCase() : '';
 
-  if (machineId === 'Press-03' || clean.includes('coil') || clean.includes('die') || clean.includes('feed') || clean.includes('stamp')) {
+  if (clean.includes('jammed') || clean.includes('lock is jammed')) {
+    return 'Mechanical Maintenance';
+  }
+
+  const supervisorSignals = [
+    'rag', 'towel', 'scrap truck', 'pickup', 'forklift', 'wi-fi', 'wifi',
+    'leave early', 'quota', 'shift schedule', 'password', 'lunch', 'break',
+    'training', 'drawing', 'print', 'hex key', 'deburring tool', 'who is',
+    'where are', 'where do i put the lockout tags', 'where do', 'where is'
+  ];
+
+  for (const signal of supervisorSignals) {
+    if (clean.includes(signal) && (machineId === 'UNASSIGNED' || clean.includes('where do i put'))) {
+      return 'Shift Supervisor';
+    }
+  }
+
+  if (machineId === 'Press 4' || machineId === 'Press-03' || clean.includes('press') || clean.includes('die') || clean.includes('ram')) {
     return 'Hank (Tooling & Setup)';
   }
 
-  if (machineId === 'CNC-08' || clean.includes('mill') || clean.includes('spindle') || clean.includes('auger') || clean.includes('coolant')) {
+  if (machineId === 'CNC Mill 2' || machineId === 'CNC-08' || clean.includes('mill') || clean.includes('cnc')) {
     return 'CNC Specialist';
   }
 
-  if (machineId === 'Brake-02' || clean.includes('brake') || clean.includes('bend') || clean.includes('backgauge') || clean.includes('flange')) {
-    return 'Tooling & Forming';
-  }
-
-  if (machineId === 'Lathe-01' || clean.includes('lathe') || clean.includes('chuck') || clean.includes('turning')) {
+  if (machineId === 'Lathe 3' || machineId === 'Lathe-01' || clean.includes('lathe') || clean.includes('chuck')) {
     return 'Turning Specialist';
   }
 
-  if (clean.includes('electrical') || clean.includes('sensor') || clean.includes('wiring') || clean.includes('screen')) {
+  if (machineId === 'Compressor A' || clean.includes('compressor')) {
+    return 'Plant Facilities';
+  }
+
+  if (machineId === 'Conveyor B' || clean.includes('conveyor') || clean.includes('belt')) {
+    return 'Mechanical Maintenance';
+  }
+
+  if (clean.includes('electrical') || clean.includes('wiring') || clean.includes('panel')) {
     return 'Electrical Maintenance';
   }
 
   return 'General Maintenance';
+}
+
+export function normalizeRoute(rawRoute) {
+  if (!rawRoute) return 'maintenance';
+  const r = rawRoute.toLowerCase();
+  if (r.includes('safety') || r.includes('ehs')) return 'safety';
+  if (r.includes('supervisor') || r.includes('lead')) return 'supervisor';
+  return 'maintenance';
 }
 
 export function extractIssue(text) {
@@ -165,6 +204,8 @@ export function generateWorkOrder({ query, worker = null, shopData = null, count
     issue: issue,
     severity: severity,
     route: route,
+    normalizedSeverity: severity.toLowerCase(),
+    normalizedRoute: normalizeRoute(route),
     reportedBy: reportedBy,
     time: formattedTime
   };

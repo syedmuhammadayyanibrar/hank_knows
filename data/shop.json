@@ -1,27 +1,27 @@
 {
   "shopName": "Acme Precision Stamping & CNC",
   "facility": "Plant 4 - Forming & Machining Bay",
-  "phoneExtension": "EXT 4040 · LINE 2",
+  "phoneExtension": "EXT 4040 · LINE 4",
   "workers": [
     {
       "id": "dev",
       "name": "Dev",
       "role": "Apprentice Machinist",
-      "bay": "Stamping Line 2",
+      "bay": "Press Line 4",
       "shift": "Day (06:00-14:30)"
     },
     {
       "id": "marco",
       "name": "Marco",
       "role": "CNC Operator",
-      "bay": "Mill Cell B",
+      "bay": "Mill Cell 2",
       "shift": "Day (06:00-14:30)"
     },
     {
       "id": "lena",
       "name": "Lena",
-      "role": "Brake Press Operator",
-      "bay": "Forming Bay",
+      "role": "Brake & Lathe Operator",
+      "bay": "Turning & Forming Bay",
       "shift": "Day (06:00-14:30)"
     }
   ],
@@ -37,47 +37,53 @@
   ],
   "machines": [
     {
-      "id": "Press-03",
-      "name": "Minster 200-Ton Mechanical Stamping Press",
+      "id": "Press 4",
+      "name": "Minster 200-Ton Mechanical Press 4",
       "type": "Mechanical Press",
-      "location": "Line 2",
-      "tonnage": 200,
-      "power": "480V 3-Phase",
-      "controller": "Allen-Bradley GuardLogix",
-      "aliases": ["press-03", "press 3", "minster", "stamping press", "press"]
+      "location": "Line 4",
+      "aliases": ["press 4", "press-4", "press4", "pres 4", "pres4", "press", "ram", "minster", "la prensa 4", "prensa 4", "die change", "die chnage", "die is stuck"]
     },
     {
-      "id": "Brake-02",
-      "name": "Amada HFE-1003 Hydraulic Press Brake",
-      "type": "Press Brake",
-      "location": "Forming Bay",
-      "tonnage": 100,
-      "controller": "Amada AMNC-PC",
-      "aliases": ["brake-02", "brake 2", "amada", "press brake", "brake"]
-    },
-    {
-      "id": "CNC-08",
-      "name": "Haas VF-4 4-Axis Vertical Machining Center",
-      "type": "CNC Mill",
-      "location": "Cell B",
-      "spindleRPM": 10000,
-      "controller": "Haas NextGen",
-      "aliases": ["cnc-08", "cnc 8", "haas vf-4", "haas", "mill", "cnc"]
-    },
-    {
-      "id": "Lathe-01",
-      "name": "Mazak Quick Turn 250 CNC Lathe",
+      "id": "Lathe 3",
+      "name": "Mazak Quick Turn Lathe 3",
       "type": "CNC Lathe",
       "location": "Turning Bay",
-      "controller": "Mazatrol SmoothG",
-      "aliases": ["lathe-01", "lathe 1", "mazak", "lathe"]
+      "aliases": ["lathe 3", "lathe-3", "lathe3", "lathe", "mazak", "chuck"]
     },
     {
-      "id": "Degreaser-01",
-      "name": "Safety-Kleen Heated Parts Washer",
+      "id": "CNC Mill 2",
+      "name": "Haas VF-2 CNC Mill 2",
+      "type": "CNC Mill",
+      "location": "Cell 2",
+      "aliases": ["cnc mill 2", "cnc mill", "mill 2", "cnc 2", "haas", "mill", "cnc", "coolant tank", "coolant reservoir", "coolant"]
+    },
+    {
+      "id": "Compressor A",
+      "name": "Rotary Screw Air Compressor A",
+      "type": "Air Compressor",
+      "location": "Utility Room",
+      "aliases": ["compressor a", "compressor-a", "compressor", "air compressor", "compressor panel"]
+    },
+    {
+      "id": "Conveyor B",
+      "name": "Chip and Scrap Conveyor B",
+      "type": "Belt Conveyor",
+      "location": "Line 4 / Cell 2",
+      "aliases": ["conveyor b", "conveyor-b", "conveyor", "belt"]
+    },
+    {
+      "id": "Tank 4",
+      "name": "Parts Washer and Vapor Degreaser Tank 4",
       "type": "Vapor Degreaser",
-      "location": "Wash Station 1",
-      "aliases": ["degreaser-01", "degreaser", "washer", "parts washer"]
+      "location": "Wash Bay",
+      "aliases": ["tank 4", "tank-4", "tank4", "degreaser", "parts washer", "washer", "solvent tank", "solvent"]
+    },
+    {
+      "id": "Grinder",
+      "name": "Toolroom Pedestal Grinder",
+      "type": "Pedestal Grinder",
+      "location": "Toolroom",
+      "aliases": ["grinder", "pedestal grinder", "bench grinder"]
     }
   ]
 }
